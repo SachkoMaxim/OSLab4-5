@@ -11,13 +11,28 @@ public class Main {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        // Додаємо хук для обробки Ctrl + C (SIGINT)
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("Exiting the system..."); // Повідомлення перед закриттям програми
+            // os.saveState();
+            // Зберігаємо стан ОС перед виходом
+        }));
+
         while (true) {
-            System.out.print("> ");
-            String input = scanner.nextLine();
-            if (input == null || input.isEmpty()) {
-                continue;
+            try {
+                System.out.print("> ");
+                if (!scanner.hasNextLine()) {
+                    break; // Якщо ввід закрито (наприклад, через Ctrl + C), виходимо з циклу
+                }
+                String input = scanner.nextLine();
+                if (input == null || input.isEmpty()) {
+                    continue;
+                }
+                sendCommand(input);
+            } catch (Exception e) {
+                System.out.println("Error occurred: " + e.getMessage());
+                break;
             }
-            sendCommand(input);
         }
     }
 
@@ -100,6 +115,9 @@ public class Main {
         });
         commands.put("delete_all", () -> {
             os.deleteAll();
+        });
+        commands.put("exit", () -> {
+            System.exit(0); // Завершуємо програму
         });
 
         return commands.getOrDefault(command, () -> System.out.println("Wrong command or insufficient argument number: " + command));
