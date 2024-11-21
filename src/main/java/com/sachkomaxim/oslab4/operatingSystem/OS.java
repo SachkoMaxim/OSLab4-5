@@ -31,6 +31,7 @@ public class OS implements Serializable {
         if (os == null) {
             return new OS(); // Якщо не завантажено, створюється новий екземпляр
         }
+        logInfo("Loaded OS state, FileDir, " + System.identityHashCode(os.getCWD()));
         return os;
     }
 

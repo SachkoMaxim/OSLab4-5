@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bb26b358-8bbf-4a02-899b-be12ed56336e" name="Changes" comment="added reset for resetting state">
+    <list default="true" id="bb26b358-8bbf-4a02-899b-be12ed56336e" name="Changes" comment="made proper exiting system">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/sachkomaxim/oslab4/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sachkomaxim/oslab4/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sachkomaxim/oslab4/operatingSystem/OS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sachkomaxim/oslab4/operatingSystem/OS.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +93,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732201676202</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="made proper exiting system">
+      <option name="closed" value="true" />
+      <created>1732202542030</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1732202542030</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -102,6 +111,7 @@
     <MESSAGE value="added os saving (first step)" />
     <MESSAGE value="remade delete_all and made it better" />
     <MESSAGE value="added reset for resetting state" />
-    <option name="LAST_COMMIT_MESSAGE" value="added reset for resetting state" />
+    <MESSAGE value="made proper exiting system" />
+    <option name="LAST_COMMIT_MESSAGE" value="made proper exiting system" />
   </component>
 </project>

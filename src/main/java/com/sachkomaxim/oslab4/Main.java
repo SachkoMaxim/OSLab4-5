@@ -7,7 +7,7 @@ import java.util.Scanner;
 import com.sachkomaxim.oslab4.operatingSystem.OS;
 
 public class Main {
-    private static OS os = new OS();
+    private static OS os = OS.loadState();
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
