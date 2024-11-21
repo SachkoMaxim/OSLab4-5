@@ -7,7 +7,7 @@ import java.util.Scanner;
 import com.sachkomaxim.oslab4.operatingSystem.OS;
 
 public class Main {
-    private static final OS os = new OS();
+    private static OS os = new OS();
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -82,6 +82,21 @@ public class Main {
         commands.put("symlink", () -> {
             String[] args = remainingArgs.split("\\s+");
             if (args.length >= 2) os.symlink(args[0], args[1]);
+        });
+        commands.put("save", () -> {
+            os.saveState();
+            System.out.println("OS state saved.");
+        });
+        commands.put("load", () -> {
+            os = OS.loadState();
+            if (os != null) {
+                System.out.println("OS state loaded.");
+            } else {
+                System.out.println("Failed to load OS state. A new OS instance has been created.");
+            }
+        });
+        commands.put("delete_all", () -> {
+            os.deleteAll();
         });
 
         return commands.getOrDefault(command, () -> System.out.println("Wrong command or insufficient argument number: " + command));

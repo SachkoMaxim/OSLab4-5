@@ -1,9 +1,10 @@
 package com.sachkomaxim.oslab4.fileSystem.structures;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FileReg extends FileDesc {
+public class FileReg extends FileDesc implements Serializable {
     private final Map<Integer, Block> data = new HashMap<>();
 
     public Map<Integer, Block> getData() {

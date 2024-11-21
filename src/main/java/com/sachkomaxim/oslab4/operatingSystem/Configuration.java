@@ -4,6 +4,7 @@ public class Configuration {
     public static final int NAME_WIDTH = 20;
     public static final String NAME_DOT = ".";
     public static final String NAME_DOT_DOT = "..";
+    public static final String SAVE_FILE = "os_state.ser";
     public static final int BLOCK_SIZE = 16;
     public static final int NUM_BLOCKS = 1024;
     public static final int NUM_FILE_DESC = 256;

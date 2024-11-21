@@ -1,15 +1,18 @@
 package com.sachkomaxim.oslab4.operatingSystem;
 
+import com.sachkomaxim.oslab4.OSStateManager;
 import com.sachkomaxim.oslab4.fileSystem.*;
 import com.sachkomaxim.oslab4.fileSystem.structures.*;
 
+import java.io.Serializable;
 import java.util.*;
 
 import static com.sachkomaxim.oslab4.Helpers.*;
 import static com.sachkomaxim.oslab4.Log.*;
 
-public class OS {
+public class OS implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private int symlinkRefCount;
     private final FS fs = new FS();
     private final List<FileDesc> fd = new ArrayList<>();
@@ -17,6 +20,23 @@ public class OS {
 
     public OS() {
         setCWD(fs.getRootDir());
+    }
+
+    public void saveState() {
+        OSStateManager.saveState(this);
+    }
+
+    public static OS loadState() {
+        OS os = OSStateManager.loadState();
+        if (os == null) {
+            return new OS(); // Якщо не завантажено, створюється новий екземпляр
+        }
+        return os;
+    }
+
+    public void deleteAll() {
+        fs.getRootDir().getLinks().clear(); // Очищаємо всі посилання на файли та директорії
+        System.out.println("All files and directories have been deleted.");
     }
 
     public void create(String path) {

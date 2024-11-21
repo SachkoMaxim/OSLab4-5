@@ -3,9 +3,10 @@ package com.sachkomaxim.oslab4.fileSystem;
 import com.sachkomaxim.oslab4.fileSystem.structures.*;
 import com.sachkomaxim.oslab4.operatingSystem.Configuration;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class FS {
+public class FS implements Serializable {
     private final FileDir rootDir = new FileDir(null);
     private final Map<Integer, FileTableEntry> fileDescriptorTable = new HashMap<>();
 

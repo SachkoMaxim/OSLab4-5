@@ -1,6 +1,8 @@
 package com.sachkomaxim.oslab4.fileSystem.structures;
 
-public class FileSym extends FileDesc {
+import java.io.Serializable;
+
+public class FileSym extends FileDesc implements Serializable {
     private String value;
 
     public FileSym(String value) {

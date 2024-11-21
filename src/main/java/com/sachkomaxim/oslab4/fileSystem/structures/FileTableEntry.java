@@ -1,6 +1,8 @@
 package com.sachkomaxim.oslab4.fileSystem.structures;
 
-public class FileTableEntry {
+import java.io.Serializable;
+
+public class FileTableEntry implements Serializable {
     private FileReg desc = new FileReg();
     private int offset;
     private FileAccess accessMode; //AccessMode

@@ -2,7 +2,9 @@ package com.sachkomaxim.oslab4.fileSystem.structures;
 
 import com.sachkomaxim.oslab4.Log;
 
-public abstract class FileDesc {
+import java.io.Serializable;
+
+public abstract class FileDesc implements Serializable {
     private int size;
     private int hardlinkCount;
 

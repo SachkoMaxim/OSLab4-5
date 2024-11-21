@@ -2,10 +2,11 @@ package com.sachkomaxim.oslab4.fileSystem.structures;
 
 import com.sachkomaxim.oslab4.operatingSystem.Configuration;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FileDir extends FileDesc {
+public class FileDir extends FileDesc implements Serializable {
     private final Map<String, FileDesc> links = new HashMap<>();
 
     public FileDir(FileDesc parentDesc) {

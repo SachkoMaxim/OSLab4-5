@@ -2,7 +2,9 @@ package com.sachkomaxim.oslab4.fileSystem.structures;
 
 import com.sachkomaxim.oslab4.operatingSystem.Configuration;
 
-public class Block {
+import java.io.Serializable;
+
+public class Block implements Serializable {
     public final byte[] data = new byte[Configuration.BLOCK_SIZE];
 
     public Object getData() {
