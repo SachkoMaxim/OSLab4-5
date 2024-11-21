@@ -105,7 +105,7 @@ public class FS implements Serializable {
         if (entry == null) {
             throw new IllegalArgumentException("Invalid file descriptor");
         }
-        if (offset < 0 || offset >= entry.getDesc().getSize()) {
+        if (offset < 0) {
             throw new IndexOutOfBoundsException("Invalid offset");
         }
         entry.setOffset(offset);
