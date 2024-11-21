@@ -35,8 +35,18 @@ public class OS implements Serializable {
     }
 
     public void deleteAll() {
-        fs.getRootDir().getLinks().clear(); // Очищаємо всі посилання на файли та директорії
-        System.out.println("All files and directories have been deleted.");
+        // Перевіряємо, чи користувач знаходиться в кореневій директорії
+        String currentPath = getCurrentPath();
+        if (!currentPath.equals("/")) {
+            cd("/");
+        }
+
+        // Видаляємо все в кореневій директорії, окрім "."
+        FileDir rootDir = fs.getRootDir();
+        rootDir.getLinks().entrySet().removeIf(entry -> !entry.getKey().equals(Configuration.NAME_DOT) &&
+                !entry.getKey().equals(Configuration.NAME_DOT_DOT));
+
+        System.out.println("All files and directories have been deleted, except the root directory.");
     }
 
     public void create(String path) {
@@ -192,20 +202,7 @@ public class OS implements Serializable {
 
     public void pwd() {
         logInfo("Get CWD canonical absolute path");
-        StringBuilder cwdPathBuilder = new StringBuilder();
-        Queue<FileDir> actualPath = new LinkedList<>(cwdPath);
-        while (actualPath.size() > 1) {
-            FileDir dir1 = actualPath.poll();
-            FileDir dir2 = actualPath.peek();
-            String name = fs.reverseLookup(dir2, dir1);
-            cwdPathBuilder.insert(0, "/" + name);
-        }
-        String cwdPath;
-        if(cwdPathBuilder.isEmpty()) {
-            cwdPath = "/";
-        } else {
-            cwdPath = cwdPathBuilder.toString();
-        }
+        String cwdPath = getCurrentPath();
         logInfo("CWD canonical absolute path '" + cwdPath + "'");
     }
 
@@ -276,6 +273,21 @@ public class OS implements Serializable {
         } catch (Exception e) {
             logFail(e.getMessage());
         }
+    }
+
+    public String getCurrentPath() {
+        StringBuilder cwdPathBuilder = new StringBuilder();
+        Queue<FileDir> actualPath = new LinkedList<>(cwdPath);
+        while (actualPath.size() > 1) {
+            FileDir dir1 = actualPath.poll();
+            FileDir dir2 = actualPath.peek();
+            String name = fs.reverseLookup(dir2, dir1);
+            cwdPathBuilder.insert(0, "/" + name);
+        }
+        if (cwdPathBuilder.isEmpty()) {
+            return "/";
+        }
+        return cwdPathBuilder.toString();
     }
 
     private FileDir getCWD() {
