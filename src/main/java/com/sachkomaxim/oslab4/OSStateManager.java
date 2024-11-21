@@ -24,5 +24,15 @@ public class OSStateManager {
             return null; // Якщо не вдалося завантажити, повертаємо null
         }
     }
-}
 
+    // Очищає вміст SAVE_FILE
+    public static void reset() {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(Configuration.SAVE_FILE))) {
+            // Очищаємо файл, записуючи порожній об'єкт
+            out.writeObject(null); // Записує порожній об'єкт в файл
+            System.out.println("State reset successfully.");
+        } catch (IOException e) {
+            System.out.println("Error resetting state: " + e.getMessage());
+        }
+    }
+}

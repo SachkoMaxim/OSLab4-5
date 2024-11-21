@@ -34,6 +34,10 @@ public class OS implements Serializable {
         return os;
     }
 
+    public void resetState() {
+        OSStateManager.reset();
+    }
+
     public void deleteAll() {
         // Перевіряємо, чи користувач знаходиться в кореневій директорії
         String currentPath = getCurrentPath();

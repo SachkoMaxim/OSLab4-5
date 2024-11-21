@@ -95,6 +95,9 @@ public class Main {
                 System.out.println("Failed to load OS state. A new OS instance has been created.");
             }
         });
+        commands.put("reset", () -> {
+            os.resetState();
+        });
         commands.put("delete_all", () -> {
             os.deleteAll();
         });
