@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bb26b358-8bbf-4a02-899b-be12ed56336e" name="Changes" comment="made seek not so strict">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="bb26b358-8bbf-4a02-899b-be12ed56336e" name="Changes" comment="added saving hash">
       <change beforePath="$PROJECT_DIR$/os_state.ser" beforeDir="false" afterPath="$PROJECT_DIR$/os_state.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/sachkomaxim/oslab4/operatingSystem/OS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sachkomaxim/oslab4/operatingSystem/OS.java" afterDir="false" />
     </list>
@@ -80,7 +79,7 @@
       <workItem from="1731652257814" duration="15156000" />
       <workItem from="1731746472103" duration="19351000" />
       <workItem from="1731838452758" duration="1405000" />
-      <workItem from="1732212845946" duration="2835000" />
+      <workItem from="1732212845946" duration="3640000" />
     </task>
     <task id="LOCAL-00001" summary="added os saving (first step)">
       <option name="closed" value="true" />
@@ -130,7 +129,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732213601859</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="added saving hash">
+      <option name="closed" value="true" />
+      <created>1732216280763</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1732216280763</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -143,6 +150,7 @@
     <MESSAGE value="made proper exiting system" />
     <MESSAGE value="made auto-load" />
     <MESSAGE value="made seek not so strict" />
-    <option name="LAST_COMMIT_MESSAGE" value="made seek not so strict" />
+    <MESSAGE value="added saving hash" />
+    <option name="LAST_COMMIT_MESSAGE" value="added saving hash" />
   </component>
 </project>

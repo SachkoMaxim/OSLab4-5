@@ -17,20 +17,9 @@ public class OS implements Serializable {
     private final FS fs = new FS();
     private final List<FileDesc> fd = new ArrayList<>();
     private Deque<FileDir> cwdPath = new ArrayDeque<>();
-    private transient int cachedHashCode;
 
     public OS() {
         setCWD(fs.getRootDir());
-        updateHashCode();
-    }
-
-    private void updateHashCode() {
-        // Calculate the hash code based on important state variables
-        cachedHashCode = Objects.hash(cwdPath, fs);
-    }
-
-    public int getHashCode() {
-        return cachedHashCode;
     }
 
     public void saveState() {
@@ -43,7 +32,6 @@ public class OS implements Serializable {
             return new OS(); // Якщо не завантажено, створюється новий екземпляр
         }
         logInfo("Loaded OS state, FileDir, " + System.identityHashCode(os.getCWD()));
-        os.updateHashCode(); // Ensure hash code is recalculated
         return os;
     }
 
@@ -62,7 +50,6 @@ public class OS implements Serializable {
         FileDir rootDir = fs.getRootDir();
         rootDir.getLinks().entrySet().removeIf(entry -> !entry.getKey().equals(Configuration.NAME_DOT) &&
                 !entry.getKey().equals(Configuration.NAME_DOT_DOT));
-        updateHashCode();
 
         System.out.println("All files and directories have been deleted, except the root directory.");
     }
@@ -78,7 +65,6 @@ public class OS implements Serializable {
             return;
         }
         fs.create(parDir, name);
-        updateHashCode();
     }
 
     public void link(String path1, String path2) {
@@ -101,7 +87,6 @@ public class OS implements Serializable {
         }
 
         fs.link(parDir2, name2, dest);
-        updateHashCode();
     }
 
     public void unlink(String path) {
@@ -116,7 +101,6 @@ public class OS implements Serializable {
         }
 
         fs.unlink(parDir, name);
-        updateHashCode();
     }
 
     public void ls() {
@@ -165,7 +149,6 @@ public class OS implements Serializable {
             return;
         }
         fs.symlink(parDir, name, value);
-        updateHashCode();
     }
 
     public void mkdir(String path) {
@@ -178,7 +161,6 @@ public class OS implements Serializable {
             return;
         }
         fs.mkdir(parDir, name);
-        updateHashCode();
     }
 
     public void rmdir(String path) {
@@ -208,7 +190,6 @@ public class OS implements Serializable {
         }
         fs.rmdir(parDir, name);
         updateCWD();
-        updateHashCode();
     }
 
     public void cd(String path) {
@@ -222,7 +203,6 @@ public class OS implements Serializable {
         if (isDirectory(desc, path)) {
             setCWD((FileDir) desc);
         }
-        updateHashCode();
     }
 
     public void pwd() {
@@ -340,7 +320,6 @@ public class OS implements Serializable {
                 break;
             }
         }
-        updateHashCode();
     }
 
     private void updateCWD() {
