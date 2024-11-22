@@ -151,7 +151,14 @@ public class FS implements Serializable {
         if (entry.getAccessMode() != FileAccess.WRITE && entry.getAccessMode() != FileAccess.READ_WRITE) {
             throw new IllegalStateException("File is not opened for writing");
         }
-        if (size <= 0 || size != data.length) {
+        if (size < 0) {
+            throw new IllegalArgumentException("Invalid size");
+        }
+
+        // Якщо дані порожні, очищуємо `size` байтів, починаючи з поточної позиції
+        if (data == null || data.length == 0) {
+            data = new byte[size]; // Ініціалізуємо масив нулями
+        } else if (size != data.length) {
             throw new IllegalArgumentException("Invalid size or data length");
         }
         int bytesToWrite = size;

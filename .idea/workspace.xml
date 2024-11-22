@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bb26b358-8bbf-4a02-899b-be12ed56336e" name="Changes" comment="added saving hash">
-      <change beforePath="$PROJECT_DIR$/os_state.ser" beforeDir="false" afterPath="$PROJECT_DIR$/os_state.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sachkomaxim/oslab4/operatingSystem/OS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sachkomaxim/oslab4/operatingSystem/OS.java" afterDir="false" />
-    </list>
+    <list default="true" id="bb26b358-8bbf-4a02-899b-be12ed56336e" name="Changes" comment="added saving hash" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,18 +20,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "SachkoMaxim"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;SachkoMaxim&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/SachkoMaxim/OSLab4.git",
-    "accountId": "62d6cc1a-8c68-48e6-82c2-30c9026d04b9"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/SachkoMaxim/OSLab4.git&quot;,
+    &quot;accountId&quot;: &quot;62d6cc1a-8c68-48e6-82c2-30c9026d04b9&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
