@@ -166,9 +166,15 @@ public class FS implements Serializable {
         int blockIndex = entry.getOffset() / Configuration.BLOCK_SIZE;
         int blockOffset = entry.getOffset() % Configuration.BLOCK_SIZE;
         while (index < bytesToWrite) {
+            // Знаходимо або створюємо блок
             Block block = entry.getDesc().getData().computeIfAbsent(blockIndex, k -> new Block());
+            // Кількість байтів для копіювання у поточний блок
             int bytesToCopy = Math.min(Configuration.BLOCK_SIZE - blockOffset, bytesToWrite - index);
-            System.arraycopy(data, index, block.getData(), blockOffset, bytesToCopy);
+            System.arraycopy(data, index, block.data, blockOffset, bytesToCopy);
+            // Перевіряємо, чи блок став порожнім
+            if (isBlockEmpty(block)) {
+                entry.getDesc().getData().remove(blockIndex); // Видаляємо порожній блок
+            }
             index += bytesToCopy;
             blockIndex++;
             blockOffset = 0;
@@ -184,5 +190,17 @@ public class FS implements Serializable {
         int blocksToKeep = (size + Configuration.BLOCK_SIZE - 1) / Configuration.BLOCK_SIZE;
         desc.getData().keySet().removeIf(key -> key >= blocksToKeep);
         desc.setSize(size);
+    }
+
+    /**
+     * Допоміжний метод для перевірки, чи є блок повністю порожнім (усі байти дорівнюють 0).
+     */
+    private boolean isBlockEmpty(Block block) {
+        for (byte b : block.data) {
+            if (b != 0) {
+                return false;
+            }
+        }
+        return true;
     }
 }

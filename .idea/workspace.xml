@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bb26b358-8bbf-4a02-899b-be12ed56336e" name="Changes" comment="fun" />
+    <list default="true" id="bb26b358-8bbf-4a02-899b-be12ed56336e" name="Changes" comment="moved OSStateManager.java to operatingSystem">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sachkomaxim/oslab4/fileSystem/FS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sachkomaxim/oslab4/fileSystem/FS.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -77,6 +80,7 @@
       <workItem from="1731746472103" duration="19351000" />
       <workItem from="1731838452758" duration="1405000" />
       <workItem from="1732212845946" duration="3640000" />
+      <workItem from="1732362985533" duration="2401000" />
     </task>
     <task id="LOCAL-00001" summary="added os saving (first step)">
       <option name="closed" value="true" />
@@ -150,7 +154,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732295167477</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="moved OSStateManager.java to operatingSystem">
+      <option name="closed" value="true" />
+      <created>1732363245474</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1732363245474</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -166,6 +178,7 @@
     <MESSAGE value="added saving hash" />
     <MESSAGE value="made option to write empty things" />
     <MESSAGE value="fun" />
-    <option name="LAST_COMMIT_MESSAGE" value="fun" />
+    <MESSAGE value="moved OSStateManager.java to operatingSystem" />
+    <option name="LAST_COMMIT_MESSAGE" value="moved OSStateManager.java to operatingSystem" />
   </component>
 </project>
