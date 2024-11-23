@@ -154,10 +154,9 @@ public class FS implements Serializable {
         if (size < 0) {
             throw new IllegalArgumentException("Invalid size");
         }
-
-        // Якщо дані порожні, очищуємо `size` байтів, починаючи з поточної позиції
+        // If the data is empty, clear `size` bytes starting from the current position
         if (data == null || data.length == 0) {
-            data = new byte[size]; // Ініціалізуємо масив нулями
+            data = new byte[size]; // Initialize the array with 0s
         } else if (size != data.length) {
             throw new IllegalArgumentException("Invalid size or data length");
         }
@@ -166,14 +165,14 @@ public class FS implements Serializable {
         int blockIndex = entry.getOffset() / Configuration.BLOCK_SIZE;
         int blockOffset = entry.getOffset() % Configuration.BLOCK_SIZE;
         while (index < bytesToWrite) {
-            // Знаходимо або створюємо блок
+            // Find or create a block
             Block block = entry.getDesc().getData().computeIfAbsent(blockIndex, k -> new Block());
-            // Кількість байтів для копіювання у поточний блок
+            // Number of bytes to copy to the current block
             int bytesToCopy = Math.min(Configuration.BLOCK_SIZE - blockOffset, bytesToWrite - index);
             System.arraycopy(data, index, block.data, blockOffset, bytesToCopy);
-            // Перевіряємо, чи блок став порожнім
+            // Checking if the block has become empty
             if (isBlockEmpty(block)) {
-                entry.getDesc().getData().remove(blockIndex); // Видаляємо порожній блок
+                entry.getDesc().getData().remove(blockIndex); // Delete an empty block
             }
             index += bytesToCopy;
             blockIndex++;
@@ -192,9 +191,7 @@ public class FS implements Serializable {
         desc.setSize(size);
     }
 
-    /**
-     * Допоміжний метод для перевірки, чи є блок повністю порожнім (усі байти дорівнюють 0).
-     */
+    // A helper method to check if a block is completely empty (all bytes are 0)
     private boolean isBlockEmpty(Block block) {
         for (byte b : block.data) {
             if (b != 0) {

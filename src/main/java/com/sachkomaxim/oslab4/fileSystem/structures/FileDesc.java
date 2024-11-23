@@ -33,6 +33,7 @@ public abstract class FileDesc implements Serializable {
     public void setHardlinkCount(int hardlinkCount) {
         this.hardlinkCount = hardlinkCount;
     }
+
     @Override
     public String toString() {
         return getClass().getSimpleName() + ", " + super.hashCode();

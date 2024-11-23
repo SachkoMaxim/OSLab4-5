@@ -6,23 +6,25 @@ import java.util.Map;
 import java.util.Scanner;
 import com.sachkomaxim.oslab4.operatingSystem.OS;
 
+import static com.sachkomaxim.oslab4.Log.logFail;
+
 public class Main {
-    private static OS os = OS.loadState();
+    private static OS os = OS.loadState("access");
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        // Додаємо хук для обробки Ctrl + C (SIGINT)
+        // Add a hook to handle Ctrl + C (SIGINT) ant etc.
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.out.println("Exiting the system..."); // Повідомлення перед закриттям програми
+            System.out.println("Exiting the system..."); // Message before closing the program
             // os.saveState();
-            // Зберігаємо стан ОС перед виходом
+            // Save the OS state before exiting (вирішив закоментувати, щоб самому зберігати те, що хочу)
         }));
 
         while (true) {
             try {
                 System.out.print("> ");
                 if (!scanner.hasNextLine()) {
-                    break; // Якщо ввід закрито (наприклад, через Ctrl + C), виходимо з циклу
+                    break; // If the input is closed (for example, via Ctrl + C), we exit the loop
                 }
                 String input = scanner.nextLine();
                 if (input == null || input.isEmpty()) {
@@ -37,7 +39,7 @@ public class Main {
     }
 
     private static void sendCommand(String input) {
-        String[] inputWords = input.split("\\s+", 2); // Розділяємо команду і решту аргументів
+        String[] inputWords = input.split("\\s+", 2); // Separate the command and the remaining arguments
         String command = inputWords[0];
         String remainingArgs = inputWords.length > 1 ? inputWords[1] : "";
 
@@ -72,7 +74,9 @@ public class Main {
             String[] args = remainingArgs.split("\\s+");
             if (args.length >= 2) readString(args[0], args[1]);
         });
-        commands.put("write", () -> processWriteCommand(remainingArgs));
+        commands.put("write", () -> {
+            processWriteCommand(remainingArgs);
+        });
         commands.put("link", () -> {
             String[] args = remainingArgs.split("\\s+");
             if (args.length >= 2) os.link(args[0], args[1]);
@@ -100,15 +104,9 @@ public class Main {
         });
         commands.put("save", () -> {
             os.saveState();
-            System.out.println("OS state saved.");
         });
         commands.put("load", () -> {
             os = OS.loadState();
-            if (os != null) {
-                System.out.println("OS state loaded.");
-            } else {
-                System.out.println("Failed to load OS state. A new OS instance has been created.");
-            }
         });
         commands.put("reset", () -> {
             os.resetState();
@@ -117,17 +115,17 @@ public class Main {
             os.deleteAll();
         });
         commands.put("exit", () -> {
-            System.exit(0); // Завершуємо програму
+            System.exit(0); // Program completion
         });
 
         return commands.getOrDefault(command, () -> System.out.println("Wrong command or insufficient argument number: " + command));
     }
 
     private static void processWriteCommand(String remainingArgs) {
-        // Розділяємо аргументи за пробілом і шукаємо текст у ``.
+        // Separate arguments by space and search for text in ``
         String[] args = remainingArgs.split("\\s+");
         if (args.length < 3) {
-            System.out.println("Invalid arguments for 'write' command.");
+            logFail("Invalid arguments for 'write' command");
             return;
         }
 
@@ -135,14 +133,14 @@ public class Main {
             int fd = Integer.parseInt(args[0]);
             int size = Integer.parseInt(args[1]);
 
-            // Знаходимо текст у ``
+            // Find the text in ``
             String data = extractQuotedData(remainingArgs);
             if (data == null) {
-                System.out.println("Data for 'write' must be enclosed in ``.");
+                logFail("Data for 'write' must be enclosed in ``");
                 return;
             }
 
-            // Виконуємо запис
+            // Recording
             writeString(fd, size, data);
         } catch (NumberFormatException e) {
             System.out.println("Invalid file descriptor or size for 'write' command.");
@@ -155,7 +153,7 @@ public class Main {
         if (startIndex != -1 && endIndex > startIndex) {
             return input.substring(startIndex + 1, endIndex);
         }
-        return null; // Повертаємо null, якщо немає парних ``.
+        return null; // Return null if there are no even ``
     }
 
     private static void readString(String fd, String size) {

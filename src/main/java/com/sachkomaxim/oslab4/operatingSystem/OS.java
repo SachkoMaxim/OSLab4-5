@@ -10,7 +10,6 @@ import static com.sachkomaxim.oslab4.Helpers.*;
 import static com.sachkomaxim.oslab4.Log.*;
 
 public class OS implements Serializable {
-
     private static final long serialVersionUID = 1L;
     private int symlinkRefCount;
     private final FS fs = new FS();
@@ -23,34 +22,46 @@ public class OS implements Serializable {
 
     public void saveState() {
         OSStateManager.saveState(this);
+        logInfo("OS state saved");
     }
 
     public static OS loadState() {
+        return loadState("");
+    }
+
+    public static OS loadState(String string) {
         OS os = OSStateManager.loadState();
         if (os == null) {
-            return new OS(); // Якщо не завантажено, створюється новий екземпляр
+            logFail("Failed to load OS state");
+            if (Objects.equals(string, "access")) {
+                logInfo("A new OS instance has been created");
+                return new OS(); // If not loaded, a new instance is created
+            } else {
+                return null;
+            }
         }
-        logInfo("Loaded OS state, FileDir, " + System.identityHashCode(os.getCWD()));
+        logInfo("Loaded OS state, " + os.getCWD().toString());
         return os;
     }
 
     public void resetState() {
         OSStateManager.reset();
+        logInfo("State reset successfully");
     }
 
     public void deleteAll() {
-        // Перевіряємо, чи користувач знаходиться в кореневій директорії
+        // Check if the user is in the root directory
         String currentPath = getCurrentPath();
         if (!currentPath.equals("/")) {
             cd("/");
         }
 
-        // Видаляємо все в кореневій директорії, окрім "."
+        // Delete everything in the root directory except "." and "..'
         FileDir rootDir = fs.getRootDir();
         rootDir.getLinks().entrySet().removeIf(entry -> !entry.getKey().equals(Configuration.NAME_DOT) &&
                 !entry.getKey().equals(Configuration.NAME_DOT_DOT));
 
-        System.out.println("All files and directories have been deleted, except the root directory.");
+        logInfo("All files and directories have been deleted, except the root directory");
     }
 
     public void create(String path) {
@@ -343,10 +354,9 @@ public class OS implements Serializable {
         FileDir curDir = path.startsWith("/") ? fs.getRootDir() : cwd;
         FileDir parDir = curDir;
 
-        // Використовуємо більш безпечний спосіб розподілу шляху
         String[] pathComponents = path.split("/");
         pathComponents = Arrays.stream(pathComponents)
-                .filter(s -> !s.isEmpty()) // Відфільтровуємо порожні компоненти
+                .filter(s -> !s.isEmpty()) // Filter out empty components
                 .toArray(String[]::new);
 
         if (isRootDirectory(path)) {
