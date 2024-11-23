@@ -1,6 +1,5 @@
 package com.sachkomaxim.oslab4.operatingSystem;
 
-import com.sachkomaxim.oslab4.OSStateManager;
 import com.sachkomaxim.oslab4.fileSystem.*;
 import com.sachkomaxim.oslab4.fileSystem.structures.*;
 
