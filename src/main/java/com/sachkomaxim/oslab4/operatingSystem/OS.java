@@ -36,18 +36,19 @@ public class OS implements Serializable {
     }
 
     public static OS loadState(String string) {
-        OS currentOs = OS.getCurrentInstance(); // Отримуємо поточний стан ОС
+        OS currentOs = OS.getCurrentInstance(); // Get the current state of the OS
         OS os = OSStateManager.loadState();
         if (os == null) {
             logFail("Failed to load OS state");
             if (Objects.equals(string, "access")) {
                 logInfo("A new OS instance has been created");
-                return new OS(); // Якщо стан не завантажено, створюємо новий екземпляр
+                return new OS(); // If the state is not loaded, create a new instance
             } else {
-                return currentOs; // Повертаємо поточний стан ОС
+                return currentOs; // Return the current state of the OS
             }
         }
         logInfo("Loaded OS state, " + os.getCWD().toString());
+        currentInstance = os;
         return os;
     }
 
