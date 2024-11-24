@@ -15,9 +15,15 @@ public class OS implements Serializable {
     private final FS fs = new FS();
     private final List<FileDesc> fd = new ArrayList<>();
     private Deque<FileDir> cwdPath = new ArrayDeque<>();
+    private static OS currentInstance;
 
     public OS() {
         setCWD(fs.getRootDir());
+        currentInstance = this;
+    }
+
+    public static OS getCurrentInstance() {
+        return currentInstance;
     }
 
     public void saveState() {
@@ -30,14 +36,15 @@ public class OS implements Serializable {
     }
 
     public static OS loadState(String string) {
+        OS currentOs = OS.getCurrentInstance(); // Отримуємо поточний стан ОС
         OS os = OSStateManager.loadState();
         if (os == null) {
             logFail("Failed to load OS state");
             if (Objects.equals(string, "access")) {
                 logInfo("A new OS instance has been created");
-                return new OS(); // If not loaded, a new instance is created
+                return new OS(); // Якщо стан не завантажено, створюємо новий екземпляр
             } else {
-                return null;
+                return currentOs; // Повертаємо поточний стан ОС
             }
         }
         logInfo("Loaded OS state, " + os.getCWD().toString());
