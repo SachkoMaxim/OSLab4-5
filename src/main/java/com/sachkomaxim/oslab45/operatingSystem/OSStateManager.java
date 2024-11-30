@@ -1,4 +1,4 @@
-package com.sachkomaxim.oslab4.operatingSystem;
+package com.sachkomaxim.oslab45.operatingSystem;
 
 import java.io.*;
 

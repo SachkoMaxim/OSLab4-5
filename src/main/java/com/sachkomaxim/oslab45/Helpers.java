@@ -1,7 +1,7 @@
-package com.sachkomaxim.oslab4;
+package com.sachkomaxim.oslab45;
 
-import com.sachkomaxim.oslab4.fileSystem.structures.*;
-import static com.sachkomaxim.oslab4.Log.*;
+import com.sachkomaxim.oslab45.fileSystem.structures.*;
+import static com.sachkomaxim.oslab45.Log.*;
 
 public class Helpers {
 

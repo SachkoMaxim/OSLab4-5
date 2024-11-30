@@ -1,12 +1,12 @@
-package com.sachkomaxim.oslab4;
+package com.sachkomaxim.oslab45;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import com.sachkomaxim.oslab4.operatingSystem.OS;
+import com.sachkomaxim.oslab45.operatingSystem.OS;
 
-import static com.sachkomaxim.oslab4.Log.logFail;
+import static com.sachkomaxim.oslab45.Log.logFail;
 
 public class Main {
     private static OS os = OS.loadState("access");
@@ -53,7 +53,7 @@ public class Main {
         commands.put("stat", () -> {
             if (!remainingArgs.isEmpty()) os.fstat(remainingArgs);
         });
-        commands.put("ls", () -> {
+        commands.put("l", () -> {
             if (remainingArgs.isEmpty()) os.ls();
             else os.ls(remainingArgs);
         });

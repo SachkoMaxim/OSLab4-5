@@ -1,4 +1,4 @@
-package com.sachkomaxim.oslab4;
+package com.sachkomaxim.oslab45;
 
 public class Log {
     public static void logInfo(Object x) {

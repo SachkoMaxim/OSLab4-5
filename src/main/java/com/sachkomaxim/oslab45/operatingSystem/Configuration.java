@@ -1,4 +1,4 @@
-package com.sachkomaxim.oslab4.operatingSystem;
+package com.sachkomaxim.oslab45.operatingSystem;
 
 public class Configuration {
     public static final int NAME_WIDTH = 20;

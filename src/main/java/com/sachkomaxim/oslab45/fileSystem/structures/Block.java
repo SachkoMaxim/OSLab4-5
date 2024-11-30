@@ -1,6 +1,6 @@
-package com.sachkomaxim.oslab4.fileSystem.structures;
+package com.sachkomaxim.oslab45.fileSystem.structures;
 
-import com.sachkomaxim.oslab4.operatingSystem.Configuration;
+import com.sachkomaxim.oslab45.operatingSystem.Configuration;
 
 import java.io.Serializable;
 

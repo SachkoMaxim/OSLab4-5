@@ -1,13 +1,13 @@
-package com.sachkomaxim.oslab4.operatingSystem;
+package com.sachkomaxim.oslab45.operatingSystem;
 
-import com.sachkomaxim.oslab4.fileSystem.*;
-import com.sachkomaxim.oslab4.fileSystem.structures.*;
+import com.sachkomaxim.oslab45.fileSystem.*;
+import com.sachkomaxim.oslab45.fileSystem.structures.*;
 
 import java.io.Serializable;
 import java.util.*;
 
-import static com.sachkomaxim.oslab4.Helpers.*;
-import static com.sachkomaxim.oslab4.Log.*;
+import static com.sachkomaxim.oslab45.Helpers.*;
+import static com.sachkomaxim.oslab45.Log.*;
 
 public class OS implements Serializable {
     private static final long serialVersionUID = 1L;

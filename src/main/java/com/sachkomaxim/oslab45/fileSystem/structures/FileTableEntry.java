@@ -1,4 +1,4 @@
-package com.sachkomaxim.oslab4.fileSystem.structures;
+package com.sachkomaxim.oslab45.fileSystem.structures;
 
 import java.io.Serializable;
 
