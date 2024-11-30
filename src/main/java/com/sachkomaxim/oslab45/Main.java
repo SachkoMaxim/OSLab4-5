@@ -53,7 +53,7 @@ public class Main {
         commands.put("stat", () -> {
             if (!remainingArgs.isEmpty()) os.fstat(remainingArgs);
         });
-        commands.put("l", () -> {
+        commands.put("ls", () -> {
             if (remainingArgs.isEmpty()) os.ls();
             else os.ls(remainingArgs);
         });
