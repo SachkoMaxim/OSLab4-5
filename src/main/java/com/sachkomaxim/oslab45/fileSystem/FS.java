@@ -39,7 +39,8 @@ public class FS implements Serializable {
         if (dest instanceof FileDir fileDirDest) {
             String relativePath = reverseLookup(dir, fileDirDest);
             if (relativePath == null) {
-                throw new IllegalStateException("Cannot determine path to destination directory");
+                Log.logFail("Cannot determine path to destination directory");
+                return;
             }
             symlink(dir, name, relativePath);
         } else {
