@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bb26b358-8bbf-4a02-899b-be12ed56336e" name="Changes" comment="small fix">
+    <list default="true" id="bb26b358-8bbf-4a02-899b-be12ed56336e" name="Changes" comment="small addition">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/sachkomaxim/oslab45/fileSystem/FS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sachkomaxim/oslab45/fileSystem/FS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/sachkomaxim/oslab45/operatingSystem/OS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sachkomaxim/oslab45/operatingSystem/OS.java" afterDir="false" />
@@ -85,7 +85,8 @@
       <workItem from="1732445021581" duration="289000" />
       <workItem from="1732445382910" duration="2087000" />
       <workItem from="1732985209028" duration="1429000" />
-      <workItem from="1733068283591" duration="10185000" />
+      <workItem from="1733068283591" duration="16546000" />
+      <workItem from="1733144194296" duration="3956000" />
     </task>
     <task id="LOCAL-00001" summary="added os saving (first step)">
       <option name="closed" value="true" />
@@ -199,7 +200,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732986285918</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="small addition">
+      <option name="closed" value="true" />
+      <created>1733079282461</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1733079282461</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -220,6 +229,7 @@
     <MESSAGE value="small file changes and fixes" />
     <MESSAGE value="fixed small error with loadState()" />
     <MESSAGE value="small fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="small fix" />
+    <MESSAGE value="small addition" />
+    <option name="LAST_COMMIT_MESSAGE" value="small addition" />
   </component>
 </project>

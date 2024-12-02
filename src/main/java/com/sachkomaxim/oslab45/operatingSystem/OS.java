@@ -94,6 +94,10 @@ public class OS implements Serializable {
         if (pathNotExists(parDir1, dest, path1)) {
             return;
         }
+        if (dest instanceof FileDir && !lookupResult1.isSymlink) {
+            logFail("Cannot link to a directory");
+            return;
+        }
 
         var lookupResult2 = lookup(path2, getCWD());
         FileDir parDir2 = lookupResult2.parDir;
@@ -109,7 +113,7 @@ public class OS implements Serializable {
 
     public void unlink(String path) {
         logInfo("Unlink link '" + path + "'");
-        var lookupResult = lookup(path, getCWD(), false);
+        var lookupResult = lookup(path, getCWD(), true);
         FileDir parDir = lookupResult.parDir;
         FileDesc desc = lookupResult.desc;
         String name = lookupResult.name;
@@ -117,8 +121,16 @@ public class OS implements Serializable {
         if (pathNotExists(parDir, desc, path) || parDir == null) {
             return;
         }
+        if (desc instanceof FileDir && !lookupResult.isSymlink) {
+            logFail("Cannot unlink to a directory");
+            return;
+        }
 
-        fs.unlink(parDir, name);
+        if(lookupResult.isSymlink) {
+            fs.removeSymlink(parDir, path, name);
+        } else {
+            fs.unlink(parDir, name);
+        }
     }
 
     public void ls() {
@@ -372,7 +384,7 @@ public class OS implements Serializable {
                 .toArray(String[]::new);
 
         if (isRootDirectory(path)) {
-            return new LookupResult(fs.getRootDir(), fs.getRootDir(), "");
+            return new LookupResult(fs.getRootDir(), fs.getRootDir(), "", false);
         }
 
         String name = pathComponents[pathComponents.length - 1];
@@ -391,7 +403,7 @@ public class OS implements Serializable {
                 curDir = (FileDir) desc;
             } else if (desc instanceof FileSym sym) {
                 if (!follow && i == pathComponents.length - 1) {
-                    return new LookupResult(null, null, "");
+                    return new LookupResult(null, null, "", false);
                 }
 
                 String currPath = "/" + String.join("/", Arrays.copyOfRange(pathComponents, i + 1, pathComponents.length));
@@ -399,28 +411,30 @@ public class OS implements Serializable {
 
                 if (symlinkRefCount++ >= Configuration.MAX_SYMLINK_REF_COUNT) {
                     logFail("Symlink maximum redirection count exceeded");
-                    return new LookupResult(null, null, "");
+                    return new LookupResult(null, null, "", false);
                 }
 
                 LookupResult result = lookup(newPath, curDir, follow);
                 symlinkRefCount = 0;
-                return result;
+                return new LookupResult(result.parDir, result.desc, result.name, true);
             } else if (desc instanceof FileReg && i != pathComponents.length - 1) {
-                return new LookupResult(null, null, "");
+                return new LookupResult(null, null, "", false);
             }
         }
-        return new LookupResult(parDir, desc, name);
+        return new LookupResult(parDir, desc, name, false);
     }
 
     private static class LookupResult {
         final FileDir parDir;
         final FileDesc desc;
         final String name;
+        final boolean isSymlink;
 
-        LookupResult(FileDir parDir, FileDesc desc, String name) {
+        LookupResult(FileDir parDir, FileDesc desc, String name, boolean isSymlink) {
             this.parDir = parDir;
             this.desc = desc;
             this.name = name;
+            this.isSymlink = isSymlink;
         }
     }
 }

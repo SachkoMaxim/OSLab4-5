@@ -2,6 +2,7 @@ package com.sachkomaxim.oslab45.fileSystem;
 
 import com.sachkomaxim.oslab45.fileSystem.structures.*;
 import com.sachkomaxim.oslab45.operatingSystem.Configuration;
+import com.sachkomaxim.oslab45.Log;
 
 import java.io.Serializable;
 import java.util.*;
@@ -35,7 +36,15 @@ public class FS implements Serializable {
 
     public void link(FileDir dir, String name, FileDesc dest) {
         dest.setHardlinkCount(dest.getHardlinkCount() + 1);
-        dir.getLinks().put(name, dest);
+        if (dest instanceof FileDir fileDirDest) {
+            String relativePath = reverseLookup(dir, fileDirDest);
+            if (relativePath == null) {
+                throw new IllegalStateException("Cannot determine path to destination directory");
+            }
+            symlink(dir, name, relativePath);
+        } else {
+            dir.getLinks().put(name, dest);
+        }
     }
 
     public void unlink(FileDir dir, String name) {
@@ -189,6 +198,20 @@ public class FS implements Serializable {
         int blocksToKeep = (size + Configuration.BLOCK_SIZE - 1) / Configuration.BLOCK_SIZE;
         desc.getData().keySet().removeIf(key -> key >= blocksToKeep);
         desc.setSize(size);
+    }
+
+    public void removeSymlink(FileDir dir, String name, String trueDir) {
+        FileDesc desc = dir.getLinks().remove(name);
+        if (desc != null) {
+            FileDesc trueFileDesc = lookup(dir, trueDir);
+            if (trueFileDesc != null && trueFileDesc.getHardlinkCount() > 1) {
+                trueFileDesc.setHardlinkCount(trueFileDesc.getHardlinkCount() - 1);
+            }
+
+            Log.logInfo("Symbolic link " + name + " removed.");
+        } else {
+            Log.logFail("No symbolic link found with the name " + name);
+        }
     }
 
     // A helper method to check if a block is completely empty (all bytes are 0)
