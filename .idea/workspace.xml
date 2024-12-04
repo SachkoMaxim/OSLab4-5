@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bb26b358-8bbf-4a02-899b-be12ed56336e" name="Changes" comment="added logic for link and unlink to interact with symlink">
+    <list default="true" id="bb26b358-8bbf-4a02-899b-be12ed56336e" name="Changes" comment="small change">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sachkomaxim/oslab45/fileSystem/FS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sachkomaxim/oslab45/fileSystem/FS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sachkomaxim/oslab45/operatingSystem/OS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sachkomaxim/oslab45/operatingSystem/OS.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,6 +87,7 @@
       <workItem from="1732985209028" duration="1429000" />
       <workItem from="1733068283591" duration="16546000" />
       <workItem from="1733144194296" duration="5576000" />
+      <workItem from="1733161720035" duration="6404000" />
     </task>
     <task id="LOCAL-00001" summary="added os saving (first step)">
       <option name="closed" value="true" />
@@ -214,7 +217,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733151319062</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="small change">
+      <option name="closed" value="true" />
+      <created>1733161793124</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1733161793124</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -237,6 +248,7 @@
     <MESSAGE value="small fix" />
     <MESSAGE value="small addition" />
     <MESSAGE value="added logic for link and unlink to interact with symlink" />
-    <option name="LAST_COMMIT_MESSAGE" value="added logic for link and unlink to interact with symlink" />
+    <MESSAGE value="small change" />
+    <option name="LAST_COMMIT_MESSAGE" value="small change" />
   </component>
 </project>

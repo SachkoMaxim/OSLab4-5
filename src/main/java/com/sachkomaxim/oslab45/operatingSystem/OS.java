@@ -94,7 +94,7 @@ public class OS implements Serializable {
         if (pathNotExists(parDir1, dest, path1)) {
             return;
         }
-        if (dest instanceof FileDir && !lookupResult1.isSymlink) {
+        if (dest instanceof FileDir && lookupResult1.symlinkValue == null) {
             logFail("Cannot link to a directory");
             return;
         }
@@ -108,7 +108,13 @@ public class OS implements Serializable {
             return;
         }
 
-        fs.link(parDir2, name2, dest);
+        if(lookupResult1.symlinkValue != null) {
+            String absolutePath = path1.startsWith("/") ? path1 : getCurrentPath() + "/" + path1;
+            absolutePath = absolutePath.replaceAll("/+", "/");
+            fs.linkToSymlink(parDir2, name2, absolutePath);
+        } else {
+            fs.link(parDir2, name2, dest);
+        }
     }
 
     public void unlink(String path) {
@@ -121,13 +127,15 @@ public class OS implements Serializable {
         if (pathNotExists(parDir, desc, path) || parDir == null) {
             return;
         }
-        if (desc instanceof FileDir && !lookupResult.isSymlink) {
+        if (desc instanceof FileDir && lookupResult.symlinkValue == null) {
             logFail("Cannot unlink to a directory");
             return;
         }
 
-        if(lookupResult.isSymlink) {
-            fs.removeSymlink(parDir, path, name);
+        if (lookupResult.symlinkValue != null) {
+            String absolutePath = path.startsWith("/") ? path : getCurrentPath() + "/" + path;
+            absolutePath = absolutePath.replaceAll("/+", "/");
+            fs.removeSymlink(parDir, absolutePath);
         } else {
             fs.unlink(parDir, name);
         }
@@ -384,7 +392,7 @@ public class OS implements Serializable {
                 .toArray(String[]::new);
 
         if (isRootDirectory(path)) {
-            return new LookupResult(fs.getRootDir(), fs.getRootDir(), "", false);
+            return new LookupResult(fs.getRootDir(), fs.getRootDir(), "", null);
         }
 
         String name = pathComponents[pathComponents.length - 1];
@@ -403,7 +411,7 @@ public class OS implements Serializable {
                 curDir = (FileDir) desc;
             } else if (desc instanceof FileSym sym) {
                 if (!follow && i == pathComponents.length - 1) {
-                    return new LookupResult(null, null, "", false);
+                    return new LookupResult(null, null, "", null);
                 }
 
                 String currPath = "/" + String.join("/", Arrays.copyOfRange(pathComponents, i + 1, pathComponents.length));
@@ -411,30 +419,30 @@ public class OS implements Serializable {
 
                 if (symlinkRefCount++ >= Configuration.MAX_SYMLINK_REF_COUNT) {
                     logFail("Symlink maximum redirection count exceeded");
-                    return new LookupResult(null, null, "", false);
+                    return new LookupResult(null, null, "", null);
                 }
 
                 LookupResult result = lookup(newPath, curDir, follow);
                 symlinkRefCount = 0;
-                return new LookupResult(result.parDir, result.desc, result.name, true);
+                return new LookupResult(result.parDir, result.desc, result.name, sym.getValue());
             } else if (desc instanceof FileReg && i != pathComponents.length - 1) {
-                return new LookupResult(null, null, "", false);
+                return new LookupResult(null, null, "", null);
             }
         }
-        return new LookupResult(parDir, desc, name, false);
+        return new LookupResult(parDir, desc, name, null);
     }
 
     private static class LookupResult {
         final FileDir parDir;
         final FileDesc desc;
         final String name;
-        final boolean isSymlink;
+        final String symlinkValue;
 
-        LookupResult(FileDir parDir, FileDesc desc, String name, boolean isSymlink) {
+        LookupResult(FileDir parDir, FileDesc desc, String name, String symlinkValue) {
             this.parDir = parDir;
             this.desc = desc;
             this.name = name;
-            this.isSymlink = isSymlink;
+            this.symlinkValue = symlinkValue;
         }
     }
 }

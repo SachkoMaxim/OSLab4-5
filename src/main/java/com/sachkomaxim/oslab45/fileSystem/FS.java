@@ -36,16 +36,7 @@ public class FS implements Serializable {
 
     public void link(FileDir dir, String name, FileDesc dest) {
         dest.setHardlinkCount(dest.getHardlinkCount() + 1);
-        if (dest instanceof FileDir fileDirDest) {
-            String relativePath = reverseLookup(dir, fileDirDest);
-            if (relativePath == null) {
-                Log.logFail("Cannot determine path to destination directory");
-                return;
-            }
-            symlink(dir, name, relativePath);
-        } else {
-            dir.getLinks().put(name, dest);
-        }
+        dir.getLinks().put(name, dest);
     }
 
     public void unlink(FileDir dir, String name) {
@@ -201,17 +192,62 @@ public class FS implements Serializable {
         desc.setSize(size);
     }
 
-    public void removeSymlink(FileDir dir, String name, String trueDir) {
-        FileDesc desc = dir.getLinks().remove(name);
-        if (desc != null) {
-            FileDesc trueFileDesc = lookup(dir, trueDir);
-            if (trueFileDesc != null && trueFileDesc.getHardlinkCount() > 1) {
-                trueFileDesc.setHardlinkCount(trueFileDesc.getHardlinkCount() - 1);
-            }
+    public void linkToSymlink(FileDir dir, String name, String fullPath) {
+        if (!fullPath.startsWith("/")) {
+            Log.logFail("Path must be absolute: " + fullPath);
+            return;
+        }
 
-            Log.logInfo("Symbolic link " + name + " removed.");
+        String[] pathComponents = fullPath.split("/");
+        FileDir currentDir = rootDir;
+
+        for (int i = 1; i < pathComponents.length - 1; i++) {
+            String componentName = pathComponents[i];
+            FileDesc desc = lookup(currentDir, componentName);
+            if (!(desc instanceof FileDir nextDir)) {
+                Log.logFail("Invalid path: " + fullPath);
+                return;
+            }
+            currentDir = nextDir;
+        }
+
+        String symlinkName = pathComponents[pathComponents.length - 1];
+        FileDesc desc = currentDir.getLinks().get(symlinkName);
+
+        if (!(desc instanceof FileSym)) {
+            Log.logFail("The provided file is not a symbolic link.");
+            return;
+        }
+        desc.setHardlinkCount(desc.getHardlinkCount() + 1);
+        dir.getLinks().put(name, desc);
+    }
+
+    public void removeSymlink(FileDir rootDir, String fullPath) {
+        if (!fullPath.startsWith("/")) {
+            Log.logFail("Path must be absolute: " + fullPath);
+            return;
+        }
+
+        String[] pathComponents = fullPath.split("/");
+        FileDir currentDir = rootDir;
+
+        for (int i = 1; i < pathComponents.length - 1; i++) {
+            String componentName = pathComponents[i];
+            FileDesc desc = lookup(currentDir, componentName);
+            if (!(desc instanceof FileDir nextDir)) {
+                Log.logFail("Invalid path: " + fullPath);
+                return;
+            }
+            currentDir = nextDir;
+        }
+
+        String symlinkName = pathComponents[pathComponents.length - 1];
+        FileDesc desc = currentDir.getLinks().remove(symlinkName);
+
+        if (desc instanceof FileSym) {
+            Log.logInfo("Symbolic link " + symlinkName + " removed.");
         } else {
-            Log.logFail("No symbolic link found with the name " + name);
+            Log.logFail("No symbolic link found with the name " + symlinkName);
         }
     }
 
