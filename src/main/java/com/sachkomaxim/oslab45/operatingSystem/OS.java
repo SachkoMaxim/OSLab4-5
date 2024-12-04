@@ -179,7 +179,7 @@ public class OS implements Serializable {
 
     public void symlink(String value, String path) {
         logInfo("Create symlink '" + path + "' -> \"" + value + "\"");
-        if (value.length() > Configuration.BLOCK_SIZE) {
+        if (path.length() > Configuration.BLOCK_SIZE) {
             logFail("Symlink value exceeds maximum size");
             return;
         }
